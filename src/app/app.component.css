@@ -1,0 +1,47 @@
+.main__container {
+
+}
+.header{
+  display: block;
+  width: 100%;
+  height: 140px;
+  background-color: blue;
+}
+.data__container {
+
+}
+.global__data{
+  display: block;
+  position: relative;
+  float: left;
+  width: 20%;
+  height: 800px;
+  background-color: green;
+}
+.key__word__data {
+  display: block;
+  position: relative;
+  float: right;
+  width: 80%;
+  height: 800px;
+}
+.key__word__detail-left {
+  display: block;
+  width: 50%;
+  height: 40%;
+  background-color: red;
+  float: left;
+}
+.key__word__detail-right {
+  display: block;
+  width: 50%;
+  height: 40%;
+  background-color: red;
+  float: right;
+}
+.map {
+  display: block;
+  width: 100%;
+  height: 60%;
+  background-color: yellow;
+}
