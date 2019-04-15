@@ -16,7 +16,7 @@
       <div class="key__word__detail-left">
         <p>Top performing country for {{keyword}}</p>
         <div *ngIf="keyword && data[keyword]" >
-          <li  *ngFor="let country of data[keyword]['best']; let i = index" [attr.data-index]="i">{{country[0]}}({{country[1]}}%)</li>
+          <li *ngFor="let country of data[keyword]['best']; let i = index" [attr.data-index]="i">{{country[0]}}({{country[1]}}%)</li>
         </div>
       </div>
       <div class="key__word__detail-right">

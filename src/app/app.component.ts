@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CountryData} from './CountryData';
+import {DataServiceService} from './services/data-service.service';
 declare let google: any;
 
 @Component({
@@ -8,9 +9,9 @@ declare let google: any;
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   keyword:string='';
-  globalTopPerformances = [['US', 88], ['UK', 85], ['China', 76]];
+  globalTopPerformances: Array<any>;
   fakeData: CountryData = {
     allCountries : [
       ['Germany', 200],
@@ -27,7 +28,7 @@ export class AppComponent implements OnInit{
   data:Data = {
     football: this.fakeData
   };
-  constructor() { }
+  constructor(private dataServiceService: DataServiceService) { }
 
   drawRegionsMap(data:Array<any>) {
     let properties = [['Country', 'performance']];
@@ -51,6 +52,8 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.dataServiceService.getGlobalTopPerformances()
+      .subscribe(globalTopPerformances => this.globalTopPerformances = globalTopPerformances);
     //init map here
     google.charts.load('current', {'packages':['geochart']});
     google.charts.setOnLoadCallback(this.drawEmptyRegionsMap);
