@@ -8,13 +8,13 @@
   <div class="data__container">
     <div class="global__data">
       <p>Top performing country for all words:</p>
-      <li *ngFor="let country of globalTopPerformings; let i = index" [attr.data-index]="i">{{country[0]}}({{country[1]}}%)</li>
+      <li *ngFor="let country of globalTopPerformances; let i = index" [attr.data-index]="i">{{country[0]}}({{country[1]}}%)</li>
     </div>
     <div class="key__word__data">
       <div id="map" class="map">
       </div>
       <div class="key__word__detail-left">
-        <p>Top performing country for all words:</p>
+        <p>Top performing country for {{keyword}}</p>
         <div *ngIf="keyword && data[keyword]" >
           <li  *ngFor="let country of data[keyword]['best']; let i = index" [attr.data-index]="i">{{country[0]}}({{country[1]}}%)</li>
         </div>

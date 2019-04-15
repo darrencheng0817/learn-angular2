@@ -8,10 +8,9 @@ declare let google: any;
   styleUrls: ['./app.component.css']
 })
 
-
 export class AppComponent implements OnInit{
   keyword:string='';
-  globalTopPerformings = [['US', 88], ['UK', 85], ['China', 76]];
+  globalTopPerformances = [['US', 88], ['UK', 85], ['China', 76]];
   fakeData: CountryData = {
     allCountries : [
       ['Germany', 200],
@@ -23,7 +22,7 @@ export class AppComponent implements OnInit{
     ],
     best : [['AAA', 88], ['BBB', 85], ['CCC', 76]],
     worst : [['CCC', 88], ['BBB', 85], ['AAA', 76]]
-  }
+  };
 
   data:Data = {
     football: this.fakeData
@@ -63,8 +62,6 @@ export class AppComponent implements OnInit{
       this.drawRegionsMap(this.data[keyword].allCountries);
     }
   }
-
-
 }
 
 interface Data {

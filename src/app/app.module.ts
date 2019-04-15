@@ -5,10 +5,16 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { MapComponent } from './map/map.component';
+import { GlobalInfoComponent } from './global-info/global-info.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    MapComponent,
+    GlobalInfoComponent
   ],
   imports: [
     BrowserModule,
