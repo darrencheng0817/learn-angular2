@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CountryData} from './CountryData';
+import {CountryPerformance} from './models/CountryPerformance';
 import {DataServiceService} from './services/data-service.service';
 declare let google: any;
 
@@ -12,22 +12,9 @@ declare let google: any;
 export class AppComponent implements OnInit {
   keyword:string='';
   globalTopPerformances: Array<any>;
-  fakeData: CountryData = {
-    allCountries : [
-      ['Germany', 200],
-      ['United States', 300],
-      ['Brazil', 400],
-      ['Canada', 500],
-      ['France', 600],
-      ['RU', 700]
-    ],
-    best : [['AAA', 88], ['BBB', 85], ['CCC', 76]],
-    worst : [['CCC', 88], ['BBB', 85], ['AAA', 76]]
-  };
+  countryBestPerformances: Array<any>;
+  countryWorstPerformances: Array<any>;
 
-  data:Data = {
-    football: this.fakeData
-  };
   constructor(private dataServiceService: DataServiceService) { }
 
   drawRegionsMap(data:Array<any>) {
@@ -61,12 +48,18 @@ export class AppComponent implements OnInit {
 
   handleInput(keyword: string) {
     //update map here
-    if(this.data[keyword]) {
-      this.drawRegionsMap(this.data[keyword].allCountries);
-    }
+    this.dataServiceService.getPerformances(keyword)
+      .subscribe(data => {
+        if (data) {
+          this.drawRegionsMap(data.allCountries);
+          this.countryBestPerformances = data.best;
+          this.countryWorstPerformances = data.worst;
+        } else {
+          this.countryBestPerformances = [];
+          this.countryWorstPerformances = [];
+        }
+      });
   }
 }
 
-interface Data {
-  [key: string]: CountryData;
-}
+
