@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-global-info',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GlobalInfoComponent implements OnInit {
 
+  @Input() globalTopPerformances: Array<any>;
   constructor() { }
 
   ngOnInit() {

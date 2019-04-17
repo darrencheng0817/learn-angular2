@@ -1,15 +1,15 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="main__container">
   <div class="header">
-    <label>name:
-      <input type="text" [(ngModel)]="keyword" (input)="handleInput(keyword)">
-    </label>
+    <div class="header-text">some thing</div>
+    <div class="header-input">
+      <label>name:
+        <input type="text" [(ngModel)]="keyword" (input)="handleInput(keyword)">
+      </label>
+    </div>
   </div>
   <div class="data__container">
-    <div class="global__data">
-      <p>Top performing country for all words:</p>
-      <li *ngFor="let country of globalTopPerformances; let i = index" [attr.data-index]="i">{{country[0]}}({{country[1]}}%)</li>
-    </div>
+    <app-global-info [globalTopPerformances]="globalTopPerformances"></app-global-info>
     <div class="key__word__data">
       <div id="map" class="map">
       </div>
