@@ -2,19 +2,22 @@
   <div id="map" class="map">
   </div>
   <div class="key__word__detail-left">
-    <p>Top performing country for {{keyword}}</p>
-    <div *ngIf="countryBestPerformances">
+    <div *ngIf="keyword && countryBestPerformances; else defalut">
+      <p>Top performing country for {{keyword}}</p>
       <li *ngFor="let country of countryBestPerformances; let i = index" [attr.data-index]="i">
         {{country[0]}}({{country[1]}}%)
       </li>
     </div>
   </div>
   <div class="key__word__detail-right">
-    <p>Worst performing country for {{keyword}}:</p>
-    <div *ngIf="countryWorstPerformances">
+    <div *ngIf="keyword && countryWorstPerformances; else defalut">
+      <p>Worst performing country for {{keyword}}:</p>
       <li *ngFor="let country of countryWorstPerformances; let i = index" [attr.data-index]="i">
         {{country[0]}}({{country[1]}}%)
       </li>
     </div>
   </div>
 </div>
+<ng-template #defalut>
+  Please input a keyword!
+</ng-template>

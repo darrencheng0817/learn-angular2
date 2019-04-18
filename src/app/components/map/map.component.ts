@@ -11,9 +11,11 @@ declare let google: any;
 export class MapComponent implements OnInit {
   countryBestPerformances: Array<any>;
   countryWorstPerformances: Array<any>;
+  keyword: string = "";
 
   constructor(private message: MessageService, private dataService: DataService) {
     this.message.messageObserve.subscribe((keyword: string) => {
+      this.keyword = keyword;
       this.dataService.getPerformances(keyword)
         .subscribe(data => {
           if (data) {
