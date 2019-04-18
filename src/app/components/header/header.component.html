@@ -1,3 +1,8 @@
-<p>
-  header works!
-</p>
+<div class="header">
+  <div class="header-text">some thing</div>
+  <div class="header-input">
+    <label>name:
+      <input type="text" [(ngModel)]="keyword" (input)="handleInput(keyword)">
+    </label>
+  </div>
+</div>

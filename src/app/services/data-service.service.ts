@@ -5,7 +5,7 @@ import {CountryPerformance} from '../models/CountryPerformance';
 @Injectable({
   providedIn: 'root'
 })
-export class DataServiceService {
+export class DataService {
   fakeData: CountryPerformance = {
     allCountries : [
       ['Germany', 200],

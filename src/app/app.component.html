@@ -1,31 +1,9 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="main__container">
-  <div class="header">
-    <div class="header-text">some thing</div>
-    <div class="header-input">
-      <label>name:
-        <input type="text" [(ngModel)]="keyword" (input)="handleInput(keyword)">
-      </label>
-    </div>
-  </div>
+  <app-header></app-header>
   <div class="data__container">
-    <app-global-info [globalTopPerformances]="globalTopPerformances"></app-global-info>
-    <div class="key__word__data">
-      <div id="map" class="map">
-      </div>
-      <div class="key__word__detail-left">
-        <p>Top performing country for {{keyword}}</p>
-        <div *ngIf="keyword && countryBestPerformances" >
-          <li *ngFor="let country of countryBestPerformances; let i = index" [attr.data-index]="i">{{country[0]}}({{country[1]}}%)</li>
-        </div>
-      </div>
-      <div class="key__word__detail-right">
-        <p>Worst performing country for {{keyword}}:</p>
-        <div *ngIf="keyword && countryWorstPerformances" >
-          <li  *ngFor="let country of countryWorstPerformances; let i = index" [attr.data-index]="i">{{country[0]}}({{country[1]}}%)</li>
-        </div>
-      </div>
-    </div>
+    <app-global-info></app-global-info>
+    <app-map></app-map>
   </div>
 </div>
 
