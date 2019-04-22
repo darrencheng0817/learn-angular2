@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
-import {DataService} from '../../services/data-service.service';
-import {CountryPerformance} from '../../models/CountryPerformance';
+import {DataService, PerformanceResponse} from '../../services/data-service.service';
+import {Performance} from '../../models/Performance';
 
 @Component({
   selector: 'app-global-info',
@@ -9,12 +9,17 @@ import {CountryPerformance} from '../../models/CountryPerformance';
 })
 export class GlobalInfoComponent implements OnInit {
 
-  globalTopPerformances: Array<CountryPerformance>;
+  globalTopPerformances: Array<Performance>;
   constructor(private  dataService: DataService) { }
 
   ngOnInit() {
     this.dataService.getGlobalTopPerformances()
-      .subscribe(globalTopPerformances => this.globalTopPerformances = globalTopPerformances);
+      .subscribe(
+        (data: PerformanceResponse) => {
+          this.globalTopPerformances = data.globalTopPerformanceCountries;
+        }, // success path
+        error => console.log('error')
+        // error path
+      );
   }
-
 }

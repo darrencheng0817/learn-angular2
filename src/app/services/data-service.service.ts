@@ -1,42 +1,60 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import {CountryPerformances} from '../models/CountryPerformances';
-import {CountryPerformance} from '../models/CountryPerformance';
+import {Performance} from '../models/Performance';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  fakeData: CountryPerformances = new CountryPerformances(
-    [
-      new CountryPerformance('Germany', 200),
-      new CountryPerformance('United States', 300),
-      new CountryPerformance('Brazil', 400),
-      new CountryPerformance('Canada', 500),
-      new CountryPerformance('France', 600),
-      new CountryPerformance('RU', 700)
-    ],
-    [new CountryPerformance('AAA', 88), new CountryPerformance('BBB', 85), new CountryPerformance('CCC', 76)],
-    [new CountryPerformance('AAA', 88), new  CountryPerformance('BBB', 85), new CountryPerformance('CCC', 76)]
-  );
+  private globalInfoUrl = 'api/globalInfo';  // URL to web api
+  private performanceUrl = 'api/performance';  // URL to web api
+  constructor(private http: HttpClient) {}
 
-  data: Data = {
-    football: this.fakeData
-  };
-  constructor() { }
-
-  getGlobalTopPerformances(): Observable<Array<CountryPerformance>> {
-    return of([new CountryPerformance('US', 88),
-      new CountryPerformance('UK', 88),
-      new CountryPerformance('China', 88)]);
+  getGlobalTopPerformances(): Observable<PerformanceResponse> {
+    return this.http.get<PerformanceResponse>(this.globalInfoUrl);
+      // .pipe(
+      //   tap(_ => console.log(`fetched GlobalTopPerformances`)),
+      //   catchError(this.handleError<PerformanceResponse>('getHeroes', []))
+      // );
   }
 
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
 
-  getPerformances(keyword: string): Observable<CountryPerformances> {
-    return of(this.data[keyword]);
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
+
+  // getPerformancesByKeyword(keyword: string): Observable<CountryPerformances> {
+  //   return of(this.data[keyword]);
+  // }
+
+  /** GET hero by id. Will 404 if id not found */
+  getPerformancesByKeyword(keyword: string): Observable<PerformanceResponse> {
+    const url = `${this.performanceUrl}`;
+    const options = keyword ?
+      { params: new HttpParams().set('keyword', keyword) } : {};
+
+    return this.http.get<PerformanceResponse>(url, options);
+    //   .pipe(
+    //   tap(_ => console.log(`fetched hero id=${keyword}`)),
+    //   catchError(this.handleError<CountryPerformances>(`getPerformances  keyword=${keyword}`))
+    // );
   }
 }
 
-interface Data {
-  [key: string]: CountryPerformances;
+export interface PerformanceResponse {
+  [key: string]: Performance[];
 }

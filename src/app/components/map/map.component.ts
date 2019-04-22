@@ -16,12 +16,21 @@ export class MapComponent implements OnInit {
   constructor(private message: MessageService, private dataService: DataService) {
     this.message.messageObserve.subscribe((keyword: string) => {
       this.keyword = keyword;
-      this.dataService.getPerformances(keyword)
+      this.dataService.getPerformancesByKeyword(keyword)
         .subscribe(data => {
           if (data) {
-            this.drawRegionsMap(data.allCountriesToArray());
-            this.countryBestPerformances = data.best;
-            this.countryWorstPerformances = data.worst;
+            const performances = data.data;
+            const performanceArray: Array<Array<string|number>> = [];
+            performances.forEach(element => {
+              performanceArray.push([element.name, element.performance]);
+            });
+            this.drawRegionsMap(performanceArray);
+            this.countryBestPerformances = performances.concat().sort(function compare(a, b) {
+              return a.performance - b.performance;
+            });
+            this.countryWorstPerformances = performances.concat().sort(function compare(a, b) {
+              return b.performance - a.performance;
+              });
           } else {
             this.countryBestPerformances = [];
             this.countryWorstPerformances = [];
