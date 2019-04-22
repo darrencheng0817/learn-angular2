@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import {DataService} from '../../services/data-service.service';
+import {CountryPerformance} from '../../models/CountryPerformance';
 
 @Component({
   selector: 'app-global-info',
@@ -8,7 +9,7 @@ import {DataService} from '../../services/data-service.service';
 })
 export class GlobalInfoComponent implements OnInit {
 
-  globalTopPerformances: Array<any>;
+  globalTopPerformances: Array<CountryPerformance>;
   constructor(private  dataService: DataService) { }
 
   ngOnInit() {

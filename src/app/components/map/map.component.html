@@ -5,7 +5,7 @@
     <div *ngIf="keyword && countryBestPerformances; else defalut">
       <p>Top performing country for {{keyword}}</p>
       <li *ngFor="let country of countryBestPerformances; let i = index" [attr.data-index]="i">
-        {{country[0]}}({{country[1]}}%)
+        {{country.name}}({{country.performance}}%)
       </li>
     </div>
   </div>
@@ -13,7 +13,7 @@
     <div *ngIf="keyword && countryWorstPerformances; else defalut">
       <p>Worst performing country for {{keyword}}:</p>
       <li *ngFor="let country of countryWorstPerformances; let i = index" [attr.data-index]="i">
-        {{country[0]}}({{country[1]}}%)
+        {{country.name}}({{country.performance}}%)
       </li>
     </div>
   </div>

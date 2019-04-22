@@ -1,4 +1,4 @@
 <div class="global__data">
   <p>Top performing country for all words:</p>
-  <li *ngFor="let country of globalTopPerformances; let i = index" [attr.data-index]="i">{{country[0]}}({{country[1]}}%)</li>
+  <li *ngFor="let country of globalTopPerformances; let i = index" [attr.data-index]="i">{{country.name}}({{country.performance}}%)</li>
 </div>

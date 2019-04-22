@@ -19,7 +19,7 @@ export class MapComponent implements OnInit {
       this.dataService.getPerformances(keyword)
         .subscribe(data => {
           if (data) {
-            this.drawRegionsMap(data.allCountries);
+            this.drawRegionsMap(data.allCountriesToArray());
             this.countryBestPerformances = data.best;
             this.countryWorstPerformances = data.worst;
           } else {
@@ -34,10 +34,11 @@ export class MapComponent implements OnInit {
     let properties:Array<Array<string|number>> = [['Country', 'performance']];
     let dataTabble = google.visualization.arrayToDataTable(properties.concat(data));
     let options = {};
-
-    let chart = new google.visualization.GeoChart(document.getElementById('map'));
-
-    chart.draw(dataTabble, options);
+    const mapElement = document.getElementById('map');
+    if (mapElement) {
+      let chart = new google.visualization.GeoChart(mapElement);
+      chart.draw(dataTabble, options);
+    }
   }
 
   drawEmptyRegionsMap() {
