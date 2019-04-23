@@ -12,8 +12,8 @@ export class DataService {
   private performanceUrl = 'api/performance';  // URL to web api
   constructor(private http: HttpClient) {}
 
-  getGlobalTopPerformances(): Observable<PerformanceResponse> {
-    return this.http.get<PerformanceResponse>(this.globalInfoUrl);
+  getGlobalTopPerformances(): Observable<GlobalInfoResponse> {
+    return this.http.get<GlobalInfoResponse>(this.globalInfoUrl);
       // .pipe(
       //   tap(_ => console.log(`fetched GlobalTopPerformances`)),
       //   catchError(this.handleError<PerformanceResponse>('getHeroes', []))
@@ -53,6 +53,12 @@ export class DataService {
     //   catchError(this.handleError<CountryPerformances>(`getPerformances  keyword=${keyword}`))
     // );
   }
+}
+
+export interface GlobalInfoResponse {
+  data: {
+    [key: string]: Performance[]
+  };
 }
 
 export interface PerformanceResponse {
