@@ -12,12 +12,19 @@ export class DataService {
   private performanceUrl = 'api/performance';  // URL to web api
   constructor(private http: HttpClient) {}
 
-  getGlobalTopPerformances(): Observable<GlobalInfoResponse> {
-    return this.http.get<GlobalInfoResponse>(this.globalInfoUrl);
-      // .pipe(
-      //   tap(_ => console.log(`fetched GlobalTopPerformances`)),
-      //   catchError(this.handleError<PerformanceResponse>('getHeroes', []))
-      // );
+  getGlobalTopPerformances(): Observable<PerformanceGroup> {
+    return this.http.get<GlobalInfoResponse>(this.globalInfoUrl)
+      .pipe(map(res => {
+        const performanceGroup: PerformanceGroup = {};
+        Object.keys(res.data).forEach(key => {
+          performanceGroup[key] = [];
+          res.data[key].forEach(element => {
+            performanceGroup[key].push(new Performance(element.name, element.performance));
+          });
+        });
+
+        return performanceGroup;
+      }));
   }
 
   /**
@@ -42,12 +49,12 @@ export class DataService {
   // }
 
   /** GET hero by id. Will 404 if id not found */
-  getPerformancesByKeyword(keyword: string): Observable<PerformanceResponse> {
+  getPerformancesByKeyword(keyword: string): Observable<PerformanceGroup> {
     const url = `${this.performanceUrl}`;
     const options = keyword ?
       { params: new HttpParams().set('keyword', keyword) } : {};
 
-    return this.http.get<PerformanceResponse>(url, options);
+    return this.http.get<PerformanceGroup>(url, options);
     //   .pipe(
     //   tap(_ => console.log(`fetched hero id=${keyword}`)),
     //   catchError(this.handleError<CountryPerformances>(`getPerformances  keyword=${keyword}`))
@@ -61,6 +68,6 @@ export interface GlobalInfoResponse {
   };
 }
 
-export interface PerformanceResponse {
+export interface PerformanceGroup {
   [key: string]: Performance[];
 }
