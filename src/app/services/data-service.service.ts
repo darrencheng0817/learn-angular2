@@ -49,16 +49,19 @@ export class DataService {
   // }
 
   /** GET hero by id. Will 404 if id not found */
-  getPerformancesByKeyword(keyword: string): Observable<PerformanceGroup> {
+  getPerformancesByKeyword(keyword: string): Observable<Performance[]> {
     const url = `${this.performanceUrl}`;
     const options = keyword ?
       { params: new HttpParams().set('keyword', keyword) } : {};
 
-    return this.http.get<PerformanceGroup>(url, options);
-    //   .pipe(
-    //   tap(_ => console.log(`fetched hero id=${keyword}`)),
-    //   catchError(this.handleError<CountryPerformances>(`getPerformances  keyword=${keyword}`))
-    // );
+    return this.http.get<PerformanceGroup>(url)
+      .pipe(map(res => {
+        const performances: Performance[] = [];
+        res.data.forEach(element => {
+          performances.push(new Performance(element.name, element.performance));
+        });
+        return performances;
+      }));
   }
 }
 
