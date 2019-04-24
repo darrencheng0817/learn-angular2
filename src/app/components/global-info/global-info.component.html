@@ -1,4 +1,10 @@
 <div class="global__data">
-  <p>Top performing country for all words:</p>
-  <li *ngFor="let country of globalTopPerformances; let i = index" [attr.data-index]="i">{{country.name}}({{country.performance}}%)</li>
+  <div *ngIf="globalTopPerformances$ | async as globalTopPerformances; else loading">
+    <p>Top performing country for all words:</p>
+    <li *ngFor="let country of globalTopPerformances.globalTopPerformanceCountries; let i = index" [attr.data-index]="i">{{country.name}}({{country.performance}}%)</li>
+  </div>
 </div>
+
+<ng-template #loading>
+  loading...
+</ng-template>

@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
-import {DataService, GlobalInfoResponse} from '../../services/data-service.service';
+import {DataService, PerformanceGroup} from '../../services/data-service.service';
 import {Performance} from '../../models/Performance';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-global-info',
@@ -9,17 +10,12 @@ import {Performance} from '../../models/Performance';
 })
 export class GlobalInfoComponent implements OnInit {
 
-  globalTopPerformances: Array<Performance>;
+  globalTopPerformances$: Observable<PerformanceGroup>;
+  globalTopPerformances: PerformanceGroup;
+
   constructor(private  dataService: DataService) { }
 
   ngOnInit() {
-    this.dataService.getGlobalTopPerformances()
-      .subscribe(
-        (data: GlobalInfoResponse) => {
-          this.globalTopPerformances = data.data.globalTopPerformanceCountries;
-        }, // success path
-        error => console.log('error')
-        // error path
-      );
+    this.globalTopPerformances$ = this.dataService.getGlobalTopPerformances();
   }
 }
